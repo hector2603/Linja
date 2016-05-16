@@ -7,3 +7,4 @@ from Tablero.Tablero import Tablero
 
 if __name__ == '__main__':
     tablerito = Tablero()
+    tablerito.expandir()
