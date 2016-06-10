@@ -11,7 +11,6 @@ class Tablero(object):
     FichasFinMax = []
     FichasFinMin = []
     Movimientos = []
-    TableroInicial = 0
     ProMovMax = 0 # proximo movimiento de max
     h = 0 # heuristica del tablero 
     
@@ -27,57 +26,27 @@ class Tablero(object):
                     self.Posiciones[n-1]=[i,j]
                 j = j+1
             i = i+1
-                
-             
-    def expandir(self):
-        #auxTablerito,auxPos,auxFila = 0;
-        for i in range(0,12):
-            auxTablerito = copy.deepcopy(self.Tablerito)
-            auxPos = copy.deepcopy(self.Posiciones)
-            auxFila = 0
-            auxFinMax = copy.deepcopy(self.FichasFinMax)
-            if (auxPos[i]!= "Fin") :
-                auxFila = self.posicionColumna((auxPos[i][1])-1,auxTablerito)
-                if(auxPos[i][1]-1 == 0):
-                    auxTablerito[auxPos[i][0]][auxPos[i][1]]= 0
-                    auxFinMax.append(i+1) 
-                    auxPos[i] = "Fin"
-                elif((auxPos[i][1])>0 and auxFila != False):
-                    #print "cambio valor, valor a cambiar es: "
-                    #print auxTablerito[auxPos[i][0]][auxPos[i][1]]
-                    auxTablerito[auxFila][auxPos[i][1]-1]= i+1
-                    auxTablerito[auxPos[i][0]][auxPos[i][1]]= 0
-                    auxPos[i][1] = auxPos[i][1]-1
-                    auxPos[i][0] = auxFila 
-                for j in range(0,12):
-                    if (auxPos[i]!= "Fin") :
-                        aux2Tablerito = copy.deepcopy(auxTablerito)
-                        aux2Pos = copy.deepcopy(auxPos)
-                        aux2FinMax = copy.deepcopy(auxFinMax)
-                        auxFila = self.posicionColumna((aux2Pos[j][1])-1,aux2Tablerito)
-                        if(aux2Pos[j][1]-1 == 0):
-                            aux2Tablerito[aux2Pos[j][0]][aux2Pos[j][1]]= 0
-                            aux2FinMax.append(j+1) 
-                            aux2Pos[j] = "Fin"
-                        elif((aux2Pos[j][1])>0 and auxFila != False):
-                            #print "cambio valor, valor a cambiar es: "
-                            #print auxTablerito[auxPos[i][0]][auxPos[i][1]]
-                            aux2Tablerito[auxFila][aux2Pos[j][1]-1]= j+1
-                            aux2Tablerito[aux2Pos[j][0]][aux2Pos[j][1]]= 0
-                            aux2Pos[j][1] = aux2Pos[j][1]-1
-                            aux2Pos[j][0] = auxFila 
-                        for row in aux2Tablerito:
-                            print row
-                        #self.Tablerito = copy.deepcopy(aux2Tablerito)
-                        #self.Posiciones = copy.deepcopy(aux2Pos)
-                        #self.FichasFinMax == copy.deepcopy(aux2FinMax)
-                        print aux2Pos
-                        print "fichas fin"
-                        print auxFinMax
-        print self.Tablerito
-    
-    def posicionColumna(self, columna, tablero):
+            
+    def inicialTablero(self,tablero, fichasFinMax, fichasFinMin):
+        self.Tablerito = tablero
+        self.Posiciones = [[0,0],]*24
+        self.Movimientos = []
+        self.FichasFinMax = fichasFinMax
+        self.FichasFinMin = fichasFinMin
+        i,j = 0,0
+        for row in self.Tablerito:
+            j=0
+            for n in row:
+                if (n != 0):
+                    self.Posiciones[n-1]=[i,j]
+                j = j+1
+            i = i+1
+        for i in range(len(fichasFinMax)):
+            self.Posiciones[fichasFinMax[i]-1]="Fin"
+        for i in range(len(fichasFinMin)):
+            self.Posiciones[fichasFinMin[i]-1]="Fin"
         
+    def posicionColumna(self, columna, tablero):
         resultado = False
         contador = 0
         if(columna>=0 and columna <= 7):
@@ -130,18 +99,3 @@ class Tablero(object):
             return True
         else:
             return False
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            

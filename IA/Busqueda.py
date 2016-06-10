@@ -82,7 +82,7 @@ class Busqueda(object):
                         tableroMin = self.expandir(tableroMax, profundidad+1, alpha, betta, False)
                         
                         if(self.h.h(alpha)<self.h.h(tableroMin) ):
-                            alpha = copy.deepcopy(tableroMax)
+                            alpha = copy.deepcopy(tableroMin)
                             
                         if(self.h.h(betta)<=self.h.h(alpha)):
                             podar=True
