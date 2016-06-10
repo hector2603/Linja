@@ -8,32 +8,11 @@ import sys
 from Tablero.Tablero import Tablero
 from IA.Busqueda import Busqueda
 from IA.Heuristica import Heuristica
-<<<<<<< HEAD
 from Lector.LectorTexto import LectorTexto
-
-
-if __name__ == '__main__':
-
-    tablerito = Tablero()
-    tableritoNegativo = Tablero();
-    tableritoPositivo = Tablero();
-    tableritoNegativo.FichasFinMin = [0,]*100
-    tableritoPositivo.FichasFinMax = [0,]*100
-    h = Heuristica()
-    h.h(tableritoNegativo)
-    h.h(tableritoPositivo)
-
-    lector = LectorTexto("../Linja.txt")
-    lector.abrir()
-    tablerito = lector.crearTablero()
-    lector.cerrar()
-    print tablerito.termmino()
-    for row in tablerito.Tablerito:
-        print row
-=======
 from Interfaz import *
 
 class ejecutarGame(QtGui.QDialog):
+    
     def __init__(self, parent = None): 
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_Dialog()  
@@ -44,7 +23,12 @@ class ejecutarGame(QtGui.QDialog):
          
      
     def iniciarJuego(self):
-        #con esto leemos el archivo de texto 3 lineas        
+        #con esto leemos el archivo de texto 3 lineas
+        #Este es el lector de texto que implemente
+        #lector = LectorTexto("../Linja.txt")
+        #lector.abrir()
+        #tablerito = lector.crearTablero()
+        #lector.cerrar()      
         archivo = open("prueba.txt", "r") 
         for linea in archivo.readlines():
             print linea
@@ -56,7 +40,6 @@ class ejecutarGame(QtGui.QDialog):
         h = Heuristica()
         h.h(tableritoNegativo)
         h.h(tableritoPositivo)
->>>>>>> origin/master
     
         print tablerito.fichasTotales()
         print tablerito.profundidad()
