@@ -6,6 +6,7 @@ Created on 11/05/2016
 from Tablero.Tablero import Tablero
 from IA.Busqueda import Busqueda
 from IA.Heuristica import Heuristica
+from Lector.LectorTexto import LectorTexto
 
 
 if __name__ == '__main__':
@@ -19,11 +20,10 @@ if __name__ == '__main__':
     h.h(tableritoNegativo)
     h.h(tableritoPositivo)
 
-    print tablerito.fichasTotales()
-    print tablerito.profundidad()
-    print tablerito.termmino()
-    #tablerito.Tablerito = [[0,0,0,0,0,0,0,0],]*8
-    #tablerito.FichasFinMax = [0,]*12
+    lector = LectorTexto("../Linja.txt")
+    lector.abrir()
+    tablerito = lector.crearTablero()
+    lector.cerrar()
     print tablerito.termmino()
     for row in tablerito.Tablerito:
         print row
