@@ -22,12 +22,25 @@ class ejecutarGame(QtGui.QDialog):
          
      
     def iniciarJuego(self):
+<<<<<<< HEAD
         #Este es el lector de texto que implemente
         lector = LectorTexto("../Linja.txt")
         lector.abrir()
         tablerito = lector.crearTablero()
         lector.cerrar()      
         #tablerito = Tablero()
+=======
+        #con esto leemos el archivo de texto 3 lineas
+        #Este es el lector de texto que implemente
+        #lector = LectorTexto("../Linja.txt")
+        #lector.abrir()
+        #tablerito = lector.crearTablero()
+        #lector.cerrar()      
+        archivo = open("prueba.txt", "r") 
+        for linea in archivo.readlines():
+            print linea
+        tablerito = Tablero()
+>>>>>>> origin/master
         tableritoNegativo = Tablero();
         tableritoPositivo = Tablero();
         tableritoNegativo.FichasFinMin = [0,]*100
