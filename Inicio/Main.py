@@ -52,7 +52,7 @@ class ejecutarGame(QtGui.QDialog):
         h = Heuristica()
         h.h(tableritoNegativo)
         h.h(tableritoPositivo)
-        
+        print h.h(tablerito)
         print "Fichas Totales "+ str(tablerito.fichasTotales())
         print "Fichas Profundidad "+ str(tablerito.profundidad())
         print "Termino? "+ str(tablerito.termmino())
@@ -128,6 +128,7 @@ class ejecutarGame(QtGui.QDialog):
                         self.dibujarFichasTableroInicial(x, i, colorFicha, row[i])            
                 x += 1
             print movMin
+            print h.h(tablerito)
             if(tablerito.termmino()):
                 break
             print "turno maquina"
@@ -143,7 +144,7 @@ class ejecutarGame(QtGui.QDialog):
             #Inicio del cambio de posiciones  
             if(posicionMovimiento[2]==0): 
                 auxTablerito[auxPos[posicionMovimiento[0]][0]][auxPos[posicionMovimiento[0]][1]]= 0
-                auxFinMin.append(posicionMovimiento[0])
+                #auxFinMin.append(posicionMovimiento[0])
                 auxFinMax.append(posicionMovimiento[0]+1) 
                 auxPos[posicionMovimiento[0]] = "Fin"
                 movMax = 1;
@@ -182,7 +183,8 @@ class ejecutarGame(QtGui.QDialog):
             #En caso de que el movimiento hecho por max termine el juego
             if(tablerito.termmino()):
                 break;
-        
+        print tablerito.FichasFinMax
+        print tablerito.FichasFinMin
         #decide quien gana
         if(h.h(tablerito)>0):
             print h.h(tablerito)
