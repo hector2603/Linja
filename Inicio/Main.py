@@ -12,35 +12,39 @@ from Lector.LectorTexto import LectorTexto
 from Interfaz import *
 
 class ejecutarGame(QtGui.QDialog):
-    
+    #definimos una funcion para comenzar todos los recursos de la interfaz grafica
     def __init__(self, parent = None): 
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_Dialog()  
         self.ui.setupUi(self)
-        QtCore.QObject.connect(self.ui.leerArchivoDeTexto, QtCore.SIGNAL('clicked()'), self.iniciarJuego)
+        QtCore.QObject.connect(self.ui.juegoNuevo, QtCore.SIGNAL('clicked()'), self.iniciarJuegoNuevo)
+        QtCore.QObject.connect(self.ui.leerArchivoDeTexto, QtCore.SIGNAL('clicked()'), self.iniciarJuegoArchivoTexto)
         QtCore.QObject.connect(self.ui.salir, QtCore.SIGNAL('clicked()'), self.salirPrograma)  
-         
-     
-    def iniciarJuego(self):
-<<<<<<< HEAD
-        #Este es el lector de texto que implemente
-        lector = LectorTexto("../Linja.txt")
-        lector.abrir()
-        tablerito = lector.crearTablero()
-        lector.cerrar()      
-        #tablerito = Tablero()
-=======
-        #con esto leemos el archivo de texto 3 lineas
-        #Este es el lector de texto que implemente
-        #lector = LectorTexto("../Linja.txt")
-        #lector.abrir()
-        #tablerito = lector.crearTablero()
-        #lector.cerrar()      
-        archivo = open("prueba.txt", "r") 
-        for linea in archivo.readlines():
-            print linea
+    
+    #definimos una funcion que inicia un juego desde cero
+    def iniciarJuegoNuevo(self):
         tablerito = Tablero()
->>>>>>> origin/master
+        self.iniciarJuego(tablerito)
+    
+    #definimos una funcion que inicia un juego desde un archivo de texto
+    def iniciarJuegoArchivoTexto(self):
+        tuplaNombreTxt = QtGui.QInputDialog.getText(self, 'Nombre de Archivo', 'Ingrese el Nombre del Archo de Texto:')
+        if tuplaNombreTxt[1] == False:
+            return 0
+        else:
+            nombreTexto = str(tuplaNombreTxt[0])
+            lector = LectorTexto("../"+nombreTexto+".txt")
+        try:
+            lector.abrir()
+            tablerito = lector.crearTablero()
+            lector.cerrar()
+        except IOError:
+            QtGui.QMessageBox.warning(self, "Verifique", "Por Favor Verifique que el Archivo Exista", QtGui.QMessageBox.Ok)
+            return 0
+        self.iniciarJuego(tablerito)    
+     
+    #funcion principal que ejecuta todo el desarrollo del juego
+    def iniciarJuego(self, tablerito):
         tableritoNegativo = Tablero();
         tableritoPositivo = Tablero();
         tableritoNegativo.FichasFinMin = [0,]*100
@@ -48,7 +52,7 @@ class ejecutarGame(QtGui.QDialog):
         h = Heuristica()
         h.h(tableritoNegativo)
         h.h(tableritoPositivo)
-    
+        
         print "Fichas Totales "+ str(tablerito.fichasTotales())
         print "Fichas Profundidad "+ str(tablerito.profundidad())
         print "Termino? "+ str(tablerito.termmino())
@@ -73,6 +77,8 @@ class ejecutarGame(QtGui.QDialog):
         jugar = True
         movMin = 1
         movMax = 1
+        self.ui.numMax.setText("Movimientos del Proximo Turno Max: "+str(movMax))
+        self.ui.numMin.setText("Movimientos del Proximo Turno Min: "+str(movMin))
         while jugar:
             auxPos = tablerito.Posiciones
             auxTablerito = tablerito.Tablerito
@@ -151,6 +157,8 @@ class ejecutarGame(QtGui.QDialog):
                     movMax=1
             print posicionMovimiento
             print "movimientos del proximo turno "+str(movMax)
+            self.ui.numMax.setText("Movimientos del Proximo Turno Max: "+str(movMax))
+            self.ui.numMin.setText("Movimientos del Proximo Turno Min: "+str(movMin))
             #for row in tablerito.Tablerito:
                 #print row
             x = 0 #x = fila y row[i] columna colorFicha
@@ -177,8 +185,12 @@ class ejecutarGame(QtGui.QDialog):
         
         #decide quien gana
         if(h.h(tablerito)>0):
+            print h.h(tablerito)
             print "gano la IA"
+            QtGui.QMessageBox.information(self, "Perdiste", "Ha Ganado la IA", QtGui.QMessageBox.Ok)
         else:
+            print h.h(tablerito)
+            QtGui.QMessageBox.information(self, "Felicitaciones !!!", "Has Ganado!!!!", QtGui.QMessageBox.Ok)
             print "ganaste" 
     
             
@@ -198,6 +210,8 @@ class ejecutarGame(QtGui.QDialog):
         
     def dibujarFichasTableroInicial(self, fila , columna, colorFicha, numeroFicha):
         #fila0
+        if(numeroFicha == 0):
+            numeroFicha = (str("    "))
         if(fila==0 and columna ==0):
             self.ui.b0_0.setText(str(numeroFicha))
             self.ui.b0_0.setIcon(QtGui.QIcon("Img Linja/torre_"+colorFicha+".png"))#con esto se dibuja en la ficha
