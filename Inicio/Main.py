@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
 '''
 Created on 11/05/2016
 
-@author: Hector Ocampo
+@author: Héctor Ocampo
+@author: Luis Quintero
+@author: Andres Riascos
 '''
 from PyQt4 import QtCore, QtGui
 import sys
@@ -10,9 +13,14 @@ from IA.Busqueda import Busqueda
 from IA.Heuristica import Heuristica
 from Lector.LectorTexto import LectorTexto
 from Interfaz import *
-
+import time
+'''
+clase que inicia el juego e interactua con la vista y el agente 
+'''
 class ejecutarGame(QtGui.QDialog):
-    #definimos una funcion para comenzar todos los recursos de la interfaz grafica
+    '''
+    definimos una funcion para comenzar todos los recursos de la interfaz grafica
+    '''
     def __init__(self, parent = None): 
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_Dialog()  
@@ -21,12 +29,16 @@ class ejecutarGame(QtGui.QDialog):
         QtCore.QObject.connect(self.ui.leerArchivoDeTexto, QtCore.SIGNAL('clicked()'), self.iniciarJuegoArchivoTexto)
         QtCore.QObject.connect(self.ui.salir, QtCore.SIGNAL('clicked()'), self.salirPrograma)  
     
-    #definimos una funcion que inicia un juego desde cero
+    '''
+    definimos una funcion que inicia un juego desde cero
+    '''
     def iniciarJuegoNuevo(self):
         tablerito = Tablero()
         self.iniciarJuego(tablerito)
     
-    #definimos una funcion que inicia un juego desde un archivo de texto
+    '''
+    definimos una funcion que inicia un juego desde un archivo de texto
+    '''
     def iniciarJuegoArchivoTexto(self):
         tuplaNombreTxt = QtGui.QInputDialog.getText(self, 'Nombre de Archivo', 'Ingrese el Nombre del Archo de Texto:')
         if tuplaNombreTxt[1] == False:
@@ -43,7 +55,10 @@ class ejecutarGame(QtGui.QDialog):
             return 0
         self.iniciarJuego(tablerito)    
      
-    #funcion principal que ejecuta todo el desarrollo del juego
+    '''
+    funcion principal que ejecuta todo el desarrollo del juego
+    @param tablerito: tablero con el que se iniciara el juego 
+    '''
     def iniciarJuego(self, tablerito):
         tableritoNegativo = Tablero();
         tableritoPositivo = Tablero();
@@ -129,6 +144,7 @@ class ejecutarGame(QtGui.QDialog):
                 x += 1
             print movMin
             print h.h(tablerito)
+            time.sleep(0.5)
             if(tablerito.termmino()):
                 break
             print "turno maquina"
@@ -197,19 +213,20 @@ class ejecutarGame(QtGui.QDialog):
     
             
         
-        '''
-        print "contador"
-        print buscador.contador
-        print "heuristica"
-        print h.h(resultado)
-        print resultado.Posiciones
-        print resultado.FichasFinMax
-        print resultado.FichasFinMin
-        print resultado.Movimientos'''
+
     
+    '''
+    funcion que termina todo el programa 
+    '''
     def salirPrograma(self):
         sys.exit(0)
-        
+    '''
+    funcion que dibuja las ficha en el tablero
+    @param fila: fila en la que se dibujara la ficha
+    @param columa: Columna en la que se dibujara la ficha
+    @param colorFicha: recibe el color de la ficha a dibujar, negro o rojo
+    @param numeroFicha: el numero correspondiente de la ficha a dibujar
+    '''
     def dibujarFichasTableroInicial(self, fila , columna, colorFicha, numeroFicha):
         #fila0
         if(numeroFicha == 0):
@@ -367,7 +384,9 @@ class ejecutarGame(QtGui.QDialog):
             
         
            
-
+'''
+main que inicia todo el juego :D
+'''
 if __name__ == '__main__':
     
     app = QtGui.QApplication(sys.argv)

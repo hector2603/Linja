@@ -1,17 +1,29 @@
+# -*- coding: utf-8 -*-
+
 '''
 Created on 24/05/2016
 
-@author: Hector Ocampo
+@author: Héctor Ocampo
+@author: Luis Quintero
+@author: Andrés Riascos
 '''
 from Tablero.Tablero import Tablero
-
+'''
+clase encargada de decir el valor heuristico de un tablero 
+'''
 class Heuristica(object):
     
     Tablerito = Tablero()
-
+    '''
+    constructor
+    '''
     def __init__(self):
         self.Tablerito = Tablero();
-        
+    '''
+    función que calcula la heuristica del tablero
+    @param tablero: Objeto tablero al cual se le calculará el valor H
+    @return: int correspondiente al valor de la heuristica  
+    ''' 
     def h(self,tablero):
         h = 0;
         contadorMax = 0;
